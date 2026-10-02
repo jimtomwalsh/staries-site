@@ -132,6 +132,53 @@
     input[type=email] { flex: none; width: 100%; }
     form button { width: 100%; }
   }
+
+  [hidden] { display: none !important; }
+
+  /* ---- Motion: slow, quiet, and off under reduced motion ---- */
+  .sparkle { overflow: visible; }
+  .sparkle .halo, .sparkle .rays { transform-box: fill-box; transform-origin: center; }
+  .sparkle .halo { animation: halo 4.8s ease-in-out infinite; }
+  .sparkle .rays { animation: rays 4.8s ease-in-out infinite; }
+  @keyframes halo { 0%, 100% { opacity: .75; transform: scale(.94); } 50% { opacity: 1; transform: scale(1.06); } }
+  @keyframes rays { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+
+  .stars i { animation: twinkle 5s ease-in-out infinite; }
+  .stars i:nth-child(3n)   { animation-duration: 6.5s; animation-delay: -2s; }
+  .stars i:nth-child(3n+1) { animation-duration: 4.2s; animation-delay: -1s; }
+  .stars i:nth-child(4n)   { animation-duration: 7.4s; animation-delay: -3.5s; }
+  @keyframes twinkle { 0%, 100% { filter: brightness(1); transform: scale(1); } 50% { filter: brightness(2.2); transform: scale(1.35); } }
+
+  .rise { animation: rise .9s cubic-bezier(.2,.7,.2,1) both; animation-delay: var(--d, 0s); }
+  @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  /* The sparkle keeps breathing after it rises in. */
+  .sparkle.rise { animation-name: rise; }
+
+  .js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0s); }
+  .js .reveal.in { opacity: 1; transform: none; }
+
+  .ground::after {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    box-shadow: 0 -10px 46px rgba(255,190,140,.45);
+    animation: dawn 7s ease-in-out infinite;
+  }
+  @keyframes dawn { 0%, 100% { opacity: .35; } 50% { opacity: 1; } }
+
+  form button { transition: transform .25s ease, box-shadow .25s ease, background-color .25s ease; }
+  form button:hover { transform: translateY(-1px); box-shadow: 0 8px 28px -6px rgba(255,224,138,.6); }
+  form button:active { transform: scale(.98); box-shadow: none; }
+  input[type=email] { transition: border-color .25s ease, box-shadow .25s ease; }
+  input[type=email]:focus { box-shadow: 0 0 0 4px rgba(255,224,138,.16), 0 0 28px -4px rgba(255,224,138,.35); }
+
+  .thanks { margin: 0; max-width: 420px; padding: 16px 20px; border-radius: 22px; font-size: 17px; line-height: 1.45;
+    color: var(--ink); background: var(--glass); border: 1px solid var(--glass-edge); animation: rise .6s cubic-bezier(.2,.7,.2,1) both; }
+  .sparkle.flare .halo { animation: flare 1.4s ease-out 1, halo 4.8s ease-in-out 1.4s infinite; }
+  @keyframes flare { 0% { opacity: .8; transform: scale(1); } 35% { opacity: 1; transform: scale(1.7); } 100% { opacity: .9; transform: scale(1); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .js .reveal { opacity: 1; transform: none; }
+  }
 </style>
 </head>
 <body>
@@ -147,53 +194,86 @@
 <div class="ground" aria-hidden="true"></div>
 
 <main>
-  <svg class="sparkle" viewBox="212 130 600 600" aria-hidden="true">
+  <svg class="sparkle rise" style="--d:0s" viewBox="212 130 600 600" aria-hidden="true">
     <defs>
       <radialGradient id="hal"><stop offset="0" stop-color="#ffe08a" stop-opacity=".5"/><stop offset=".35" stop-color="#ffe08a" stop-opacity=".19"/><stop offset="1" stop-color="#ffe08a" stop-opacity="0"/></radialGradient>
       <linearGradient id="sp" gradientUnits="userSpaceOnUse" x1="512" y1="230" x2="512" y2="630"><stop offset="0" stop-color="#fff6e0"/><stop offset="1" stop-color="#ffe08a"/></linearGradient>
       <radialGradient id="cg"><stop offset="0" stop-color="#fff6e0" stop-opacity=".9"/><stop offset=".35" stop-color="#fff6e0" stop-opacity=".35"/><stop offset="1" stop-color="#fff6e0" stop-opacity="0"/></radialGradient>
     </defs>
-    <circle cx="512" cy="430" r="220" fill="url(#hal)"/>
-    <path d="M512.0 230.0 Q530.4 411.6 712.0 430.0 Q530.4 448.4 512.0 630.0 Q493.6 448.4 312.0 430.0 Q493.6 411.6 512.0 230.0 Z M575.6 366.4 Q530.0 430.0 575.6 493.6 Q512.0 448.0 448.4 493.6 Q494.0 430.0 448.4 366.4 Q512.0 412.0 575.6 366.4 Z" fill="url(#sp)"/>
+    <circle class="halo" cx="512" cy="430" r="220" fill="url(#hal)"/>
+    <path class="rays" d="M512.0 230.0 Q530.4 411.6 712.0 430.0 Q530.4 448.4 512.0 630.0 Q493.6 448.4 312.0 430.0 Q493.6 411.6 512.0 230.0 Z M575.6 366.4 Q530.0 430.0 575.6 493.6 Q512.0 448.0 448.4 493.6 Q494.0 430.0 448.4 366.4 Q512.0 412.0 575.6 366.4 Z" fill="url(#sp)"/>
     <circle cx="512" cy="430" r="83.6" fill="url(#cg)" opacity=".85"/>
     <circle cx="512" cy="430" r="44" fill="#fff6e0"/>
   </svg>
 
-  <p class="eyebrow">Every interview asks it. Most people go blank.</p>
-  <h1>“Tell me about a time when…”</h1>
-  <p class="lede">Staries is a work journal for your best stories. Write one down the week it happens, practise telling it, and walk into the interview or review with the right one ready.</p>
+  <p class="eyebrow rise" style="--d:.15s">Every interview asks it. Most people go blank.</p>
+  <h1 class="rise" style="--d:.25s">“Tell me about a time when…”</h1>
+  <p class="lede rise" style="--d:.35s">Staries is a work journal for your best stories. Write one down the week it happens, practise telling it, and walk into the interview or review with the right one ready.</p>
 
-  <form action="https://buttondown.com/api/emails/embed-subscribe/stariesapp" method="post">
+  <form class="rise" style="--d:.45s" action="https://buttondown.com/api/emails/embed-subscribe/stariesapp" method="post">
     <input type="hidden" name="tag" value="waitlist">
     <label for="email" hidden>Email</label>
     <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email">
     <button type="submit">Tell me when it's out</button>
   </form>
-  <p class="trust">No subscription. We never see your stories.</p>
+  <p class="thanks" role="status" aria-live="polite" hidden>You're on the list. Check your inbox to confirm, and we'll write once when Staries is out.</p>
+  <p class="trust rise" style="--d:.55s">No subscription. We never see your stories.</p>
 
   <section class="screens">
-    <figure>
+    <figure class="reveal">
       <div class="phone"><img src="img/talk.webp" alt="Answering out loud: a rambling spoken answer, ums and all, streams into the situation step with a live waveform" width="804" height="1748" loading="lazy"></div>
       <figcaption><b>Just talk</b><span>Answer out loud, ums and all. Staries tidies it into short points and asks what would make it stronger.</span></figcaption>
     </figure>
-    <figure>
+    <figure class="reveal">
       <div class="phone"><video id="sky-loop" src="video/sky.mp4" poster="video/sky-poster.webp" width="600" height="1304" autoplay muted loop playsinline preload="metadata" aria-label="Your sky: 63 stories drawn as stars in five constellations. The view flies into the People cluster, turns it, and flies back out."></video></div>
       <figcaption><b>Watch your sky fill in</b><span>Each story becomes a star in the skill it shows. The ones you practise shine brighter.</span></figcaption>
     </figure>
-    <figure>
+    <figure class="reveal">
       <div class="phone"><img src="img/shine.webp" alt="Shine: telling the story of winning over a sceptical CFO out loud while its situation, task, action and result rows light up" width="804" height="1748" loading="lazy"></div>
       <figcaption><b>Nail it on the day</b><span>Tell a story out loud and watch each part light up. Quick rounds teach you which story answers which question.</span></figcaption>
     </figure>
   </section>
 
 
-  <aside class="maker">
+  <aside class="maker reveal">
     <p>“I've sat in interviews, been asked ‘tell me about a time when…’, and gone completely blank. Not because I hadn't done anything. Because I'd never written it down, or practised saying it out loud. Staries is what I wish I'd had.”</p>
     <p class="sig">James, maker of Staries</p>
   </aside>
 
   <footer>Coming to iPhone. <a href="mailto:hello@staries.app">hello@staries.app</a></footer>
 </main>
+<script>
+  document.documentElement.classList.add('js');
+  (function () {
+    // Phones and the maker note rise in once as they scroll into view.
+    var items = [].slice.call(document.querySelectorAll('.reveal'));
+    items.forEach(function (el, i) { if (el.tagName === 'FIGURE') el.style.setProperty('--d', (i % 3) * 0.12 + 's'); });
+    if (!('IntersectionObserver' in window)) { items.forEach(function (el) { el.classList.add('in'); }); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    items.forEach(function (el) { io.observe(el); });
+  })();
+  (function () {
+    // Sign up without leaving the page. If the request can't be sent, fall back to a normal form post.
+    var form = document.querySelector('form');
+    var thanks = document.querySelector('.thanks');
+    var sparkle = document.querySelector('.sparkle');
+    if (!form || !window.fetch || !window.FormData) return;
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var button = form.querySelector('button');
+      button.disabled = true;
+      fetch(form.action, { method: 'POST', mode: 'no-cors', body: new FormData(form) })
+        .then(function () {
+          form.hidden = true;
+          thanks.hidden = false;
+          if (sparkle) { sparkle.classList.remove('flare'); void sparkle.getBoundingClientRect(); sparkle.classList.add('flare'); }
+        })
+        .catch(function () { button.disabled = false; form.submit(); });
+    });
+  })();
+</script>
 <script>
   (function () {
     var v = document.getElementById('sky-loop');
