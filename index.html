@@ -48,7 +48,7 @@
     position: fixed; top: -120px; right: 0; bottom: -120px; left: 0; z-index: -1;
     background:
       radial-gradient(60% 45% at 88% 8%, rgba(120,160,255,.4), rgba(120,160,255,0) 70%),
-      radial-gradient(75% 30% at 50% 72%, rgba(255,170,120,.5), rgba(255,170,120,0) 70%),
+      radial-gradient(75% 26% at 50% 70%, rgba(255,170,120,.5), rgba(255,170,120,0) 62%),
       linear-gradient(180deg, #344480 0%, var(--sky-top) 8%, var(--sky-mid) 42%, var(--sky-low) 70%, #4a4a82 82%, #344480 90%, #344480 100%);
   }
   .stars { position: absolute; inset: 0; }
@@ -202,6 +202,19 @@
         entries.forEach(function (e) { if (e.isIntersecting) { v.play().catch(function () {}); } else { v.pause(); } });
       }, { threshold: 0.25 }).observe(v);
     }
+  })();
+</script>
+<script>
+  // iOS bounces past the end of the page and shows the fixed sky underneath the ground.
+  // While it does, lift the sky by the same distance so the gap shows the page's navy instead.
+  (function () {
+    var sky = document.querySelector('.sky');
+    if (!sky) return;
+    function lift() {
+      var over = window.scrollY - (document.documentElement.scrollHeight - window.innerHeight);
+      sky.style.transform = over > 0 ? 'translateY(' + (-over) + 'px)' : '';
+    }
+    window.addEventListener('scroll', lift, { passive: true });
   })();
 </script>
 </body>
