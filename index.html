@@ -36,6 +36,8 @@
   * { box-sizing: border-box; }
   html, body { margin: 0; min-height: 100%; }
   html { background-color: #344480; }
+  /* iOS Safari only honours horizontal clipping on the root, so the wide ground arc can't pan the page sideways. */
+  html, body { overflow-x: hidden; overflow-x: clip; }
   body { position: relative; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Inter, system-ui, sans-serif;
@@ -47,8 +49,10 @@
   .sky {
     position: fixed; top: -120px; right: 0; bottom: -120px; left: 0; z-index: -1;
     background:
-      radial-gradient(60% 45% at 88% 8%, rgba(120,160,255,.4), rgba(120,160,255,0) 70%),
-      radial-gradient(75% 26% at 50% 70%, rgba(255,170,120,.5), rgba(255,170,120,0) 62%),
+      linear-gradient(180deg, #344480 0, #344480 250px, rgba(52,68,128,0) 420px),
+      linear-gradient(0deg, #344480 0, #344480 240px, rgba(52,68,128,0) 340px),
+      radial-gradient(60% 40% at 88% 22%, rgba(120,160,255,.4), rgba(120,160,255,0) 70%),
+      radial-gradient(75% 24% at 50% 64%, rgba(255,170,120,.55), rgba(255,170,120,0) 62%),
       linear-gradient(180deg, #344480 0%, var(--sky-top) 8%, var(--sky-mid) 42%, var(--sky-low) 70%, #4a4a82 82%, #344480 90%, #344480 100%);
   }
   .stars { position: absolute; inset: 0; }
