@@ -97,7 +97,7 @@
     background: #0c0b16; border-radius: 52px;
     box-shadow: 0 0 0 1.5px rgba(255,246,224,.22), 0 30px 60px -20px rgba(0,0,0,.6), 0 0 80px -10px rgba(255,224,138,.18);
   }
-  .phone img { display: block; width: 100%; height: auto; border-radius: 44px; background: #2b3a6e; }
+  .phone img, .phone video { display: block; width: 100%; height: auto; aspect-ratio: 804 / 1748; border-radius: 44px; background: #2b3a6e; object-fit: cover; }
   figcaption { margin-top: 22px; max-width: 290px; text-align: center; }
   figcaption b { display: block; font-size: 19px; font-weight: 600; margin-bottom: 6px; }
   figcaption span { color: var(--ink-soft); font-size: 15px; line-height: 1.45; }
@@ -164,7 +164,7 @@
       <figcaption><b>Just talk</b><span>Answer out loud, ums and all. Staries tidies it into short points and asks what would make it stronger.</span></figcaption>
     </figure>
     <figure>
-      <div class="phone"><img src="img/sky.webp" alt="Your sky: 63 stories drawn as stars in five constellations named Growth, Thinking, Delivery, Leadership and People" width="804" height="1748" loading="lazy"></div>
+      <div class="phone"><video id="sky-loop" src="video/sky.mp4" poster="video/sky-poster.webp" width="600" height="1304" autoplay muted loop playsinline preload="metadata" aria-label="Your sky: 63 stories drawn as stars in five constellations. The view flies into the People cluster, turns it, and flies back out."></video></div>
       <figcaption><b>Watch your sky fill in</b><span>Each story becomes a star in the skill it shows. The ones you practise shine brighter.</span></figcaption>
     </figure>
     <figure>
@@ -181,5 +181,19 @@
 
   <footer>Coming to iPhone. <a href="mailto:hello@staries.app">hello@staries.app</a></footer>
 </main>
+<script>
+  (function () {
+    var v = document.getElementById('sky-loop');
+    if (!v) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      v.removeAttribute('autoplay'); v.pause(); return;
+    }
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting) { v.play().catch(function () {}); } else { v.pause(); } });
+      }, { threshold: 0.25 }).observe(v);
+    }
+  })();
+</script>
 </body>
 </html>
