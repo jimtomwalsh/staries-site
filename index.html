@@ -82,6 +82,27 @@
   }
   .eyebrow { margin: 0 0 12px; font-size: 17px; font-weight: 500; color: var(--gold); }
   .lede { font-size: 19px; line-height: 1.45; color: var(--ink-soft); margin: 0 0 36px; max-width: 30em; }
+  .lede:has(+ .star-note) { margin-bottom: 14px; }
+  .star-note { margin: 0 0 36px; max-width: 30em; font-size: 16px; color: var(--ink-soft); }
+  .star-line { margin: 0; display: flex; align-items: center; justify-content: center; gap: 8px; line-height: 22px; }
+  .star-note b { color: var(--gold); font-weight: 600; letter-spacing: .04em; }
+  .info {
+    display: inline-grid; place-items: center; flex: none; width: 22px; height: 22px; padding: 0;
+    font: 600 13px/1 Georgia, serif; font-style: italic; color: var(--gold);
+    background: var(--glass); border: 1px solid var(--glass-edge); border-radius: 50%; cursor: pointer;
+  }
+  .info:hover, .info[aria-expanded=true] { border-color: var(--gold); }
+  .info:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  .star-explain {
+    margin: 14px auto 0; max-width: 26em; padding: 16px 20px; text-align: left;
+    font-size: 15px; line-height: 1.5; color: var(--ink);
+    background: var(--glass); border: 1px solid var(--glass-edge); border-radius: 18px;
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  }
+  .star-explain p { margin: 0; }
+  .star-explain dl { margin: 10px 0 0; display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; }
+  .star-explain dt { color: var(--gold); font-weight: 600; }
+  .star-explain dd { margin: 0; color: var(--ink-soft); }
 
   form { width: 100%; max-width: 420px; display: flex; gap: 8px; }
   input[type=email] {
@@ -209,6 +230,18 @@
   <p class="eyebrow rise" style="--d:.15s">Every interview asks it. Most people go blank.</p>
   <h1 class="rise" style="--d:.25s">“Tell me about a time when…”</h1>
   <p class="lede rise" style="--d:.35s">Staries is a work journal for your best stories. Write one down the week it happens, practise telling it, and walk into the interview or review with the right one ready.</p>
+  <div class="star-note rise" style="--d:.4s">
+    <p class="star-line"><span>Every story is shaped the <b>STAR</b> way.</span><button type="button" class="info" aria-expanded="false" aria-controls="star-explain" aria-label="What is STAR?">i</button></p>
+    <div class="star-explain" id="star-explain" hidden>
+      <p>STAR is how interviewers expect a “tell me about a time” answer to run. Staries asks for each part, so every story comes out ready to tell.</p>
+      <dl>
+        <dt>S</dt><dd>Situation: where you were and what was going on</dd>
+        <dt>T</dt><dd>Task: what you had to do</dd>
+        <dt>A</dt><dd>Action: what you did, step by step</dd>
+        <dt>R</dt><dd>Result: what changed, ideally with a number</dd>
+      </dl>
+    </div>
+  </div>
 
   <form class="rise" style="--d:.45s" action="https://buttondown.com/api/emails/embed-subscribe/stariesapp" method="post">
     <input type="hidden" name="tag" value="waitlist">
@@ -245,6 +278,17 @@
 </main>
 <script>
   document.documentElement.classList.add('js');
+  (function () {
+    // STAR explainer: hidden until someone asks for it.
+    var btn = document.querySelector('.info');
+    var box = document.getElementById('star-explain');
+    if (!btn || !box) return;
+    btn.addEventListener('click', function () {
+      var open = btn.getAttribute('aria-expanded') !== 'true';
+      btn.setAttribute('aria-expanded', open);
+      box.hidden = !open;
+    });
+  })();
   (function () {
     // Phones and the maker note rise in once as they scroll into view.
     var items = [].slice.call(document.querySelectorAll('.reveal'));
