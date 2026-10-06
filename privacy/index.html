@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#344480">
+<title>Privacy · Staries</title>
+<meta name="description" content="How Staries handles your data: your stories stay on your phone and in your own iCloud.">
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<style>
+  :root {
+    --sky-top: #2b3a6e;
+    --sky-mid: #3c4384;
+    --gold: #ffe08a;
+    --ink: #fff6e0;
+    --ink-soft: rgba(255,246,224,.72);
+    --ink-faint: rgba(255,246,224,.45);
+  }
+  * { box-sizing: border-box; }
+  html { background-color: #344480; }
+  body {
+    margin: 0; min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Inter, system-ui, sans-serif;
+    color: var(--ink); -webkit-font-smoothing: antialiased;
+    background: linear-gradient(180deg, var(--sky-top) 0, var(--sky-mid) 60%, #344480 100%) fixed;
+  }
+  main {
+    max-width: 38em; margin: 0 auto;
+    padding: calc(10vh + env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) calc(80px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  }
+  .back { font-size: 15px; color: var(--gold); text-decoration: none; }
+  .back:hover { text-decoration: underline; }
+  h1 { font-size: clamp(30px, 6vw, 40px); line-height: 1.1; letter-spacing: -.02em; margin: 28px 0 8px; }
+  .updated { margin: 0 0 36px; font-size: 14px; color: var(--ink-faint); }
+  h2 { font-size: 19px; margin: 36px 0 10px; color: var(--gold); font-weight: 600; }
+  p, li { font-size: 17px; line-height: 1.55; color: var(--ink-soft); }
+  p { margin: 0 0 14px; }
+  ul { margin: 0 0 14px; padding-left: 1.2em; }
+  strong { color: var(--ink); font-weight: 600; }
+  a { color: var(--ink); }
+  footer { margin-top: 56px; font-size: 13px; color: var(--ink-faint); }
+  footer a { color: inherit; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../">← Staries</a>
+  <h1>Privacy</h1>
+  <p class="updated">Last updated 6 October 2026</p>
+
+  <p><strong>Your stories are yours.</strong> Staries has no account and no server, and I can't see anything you write in it.</p>
+
+  <h2>The app</h2>
+  <p>Your stories, skills, questions and practice history are stored on your iPhone. If iCloud is on, they also sync through your private iCloud database, which only your Apple Account can read. Turn iCloud off for Staries and they stay on the phone.</p>
+  <p>Dictation uses Apple's Speech framework, and writing help uses Apple Intelligence on your device. Apple's privacy terms cover both. If you copy prompts out of Staries into another AI app, that app's terms apply to what you paste there.</p>
+  <p>The app has no analytics, no advertising and no tracking. It doesn't collect your data or share it with anyone.</p>
+
+  <h2>Beta testing</h2>
+  <p>If you test Staries through TestFlight, Apple shares crash reports and any feedback you choose to send with me, along with the name and email on your TestFlight invite. I use these only to fix and improve the app. Apple's TestFlight terms cover the rest.</p>
+
+  <h2>The email list</h2>
+  <p>When you join the list on this site, your email address is stored with <a href="https://buttondown.com/legal/privacy">Buttondown</a>, which sends the emails. I use it only to tell you about Staries: beta invites and launch news. Every email has an unsubscribe link, and you can ask me to delete your address at any time.</p>
+
+  <h2>This website</h2>
+  <p>staries.app is a static page hosted on GitHub Pages. It sets no cookies and runs no analytics or tracking scripts. GitHub may log visitors' IP addresses for security, as described in its <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">privacy statement</a>.</p>
+
+  <h2>Changes and questions</h2>
+  <p>If this policy changes, the date at the top will change with it. Questions or deletion requests: <a href="mailto:hello@staries.app">hello@staries.app</a>.</p>
+
+  <footer><a href="../">staries.app</a></footer>
+</main>
+</body>
+</html>
