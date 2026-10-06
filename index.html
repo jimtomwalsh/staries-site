@@ -137,9 +137,14 @@
   figcaption span { color: var(--ink-soft); font-size: 15px; line-height: 1.45; }
   .eyebrow, h1, .lede, .trust, figcaption span { text-wrap: balance; }
   .trust { margin: 14px 0 0; font-size: 14px; font-weight: 500; color: var(--ink-soft); }
-  .maker { margin: 88px auto 0; max-width: 30em; padding: 24px 26px; text-align: left; background: var(--glass); border: 1px solid var(--glass-edge); border-radius: 22px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+  .maker { margin: 88px auto 0; width: 100%; max-width: 1000px; padding: 24px 26px; text-align: left; background: var(--glass); border: 1px solid var(--glass-edge); border-radius: 22px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
   .maker p { margin: 0; font-size: 16px; line-height: 1.55; color: var(--ink); }
   .maker .sig { margin-top: 12px; font-size: 14px; color: var(--gold); }
+  @media (min-width: 821px) {
+    .maker { padding: 36px 44px; }
+    .maker p { font-size: 20px; line-height: 1.5; }
+    .maker .sig { margin-top: 16px; font-size: 15px; }
+  }
   @media (max-width: 820px) {
     .screens { grid-template-columns: 1fr; gap: 56px; max-width: 420px; }
     .phone { max-width: 250px; }
@@ -271,7 +276,7 @@
 
   <aside class="maker reveal">
     <p>“Most of this could live in your notes. What notes can’t do is shape your stories the way interviewers expect, or tell you what you forgot when you rehearse. I always wished I had that.”</p>
-    <p class="sig">James, who made Staries</p>
+    <p class="sig">James – Creator of Staries</p>
   </aside>
 
   <footer>iPhone beta opening soon. <a href="mailto:hello@staries.app">hello@staries.app</a> · <a href="privacy/">Privacy</a></footer>
