@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#344480">
+<meta name="theme-color" content="#070b1c">
 <title>Staries</title>
 <meta name="description" content="Write down your work wins. Staries shapes them the way interviewers expect and lets you rehearse out loud. iPhone. No account, no subscription.">
 <meta property="og:title" content="Staries">
@@ -19,6 +19,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <style>
   :root {
+    --night: #070b1c;
     --sky-top: #2b3a6e;
     --sky-mid: #3c4384;
     --sky-low: #7a5a7a;
@@ -35,7 +36,7 @@
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; min-height: 100%; }
-  html { background-color: #344480; }
+  html { background-color: var(--night); }
   /* iOS Safari only honours horizontal clipping on the root, so the wide ground arc can't pan the page sideways. */
   html, body { overflow-x: hidden; overflow-x: clip; }
   body { position: relative; }
@@ -46,16 +47,14 @@
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
   }
+  /* One sky down the whole page: night at the top, dawn at the bottom, in even steps as you scroll. */
   .sky {
-    position: fixed; top: -120px; right: 0; bottom: -120px; left: 0; z-index: -1;
+    position: absolute; inset: 0; z-index: -1; overflow: hidden;
     background:
-      linear-gradient(180deg, #344480 0, #344480 250px, rgba(52,68,128,0) 420px),
-      linear-gradient(0deg, #344480 0, #344480 240px, rgba(52,68,128,0) 340px),
-      radial-gradient(60% 40% at 88% 22%, rgba(120,160,255,.4), rgba(120,160,255,0) 70%),
-      radial-gradient(75% 24% at 50% 64%, rgba(255,170,120,.55), rgba(255,170,120,0) 62%),
-      linear-gradient(180deg, #344480 0%, var(--sky-top) 8%, var(--sky-mid) 42%, var(--sky-low) 70%, #4a4a82 82%, #344480 90%, #344480 100%);
+      radial-gradient(70% 22% at 50% 100%, rgba(255,185,138,.55), rgba(255,185,138,0) 70%),
+      linear-gradient(180deg, var(--night) 0%, #0d1434 20%, #1d2458 40%, var(--sky-top) 60%, #5a4f86 80%, #b9787a 100%);
   }
-  .stars { position: absolute; inset: 0; }
+  .stars { position: absolute; inset: 0; -webkit-mask-image: linear-gradient(#000 0, #000 45%, transparent 85%); mask-image: linear-gradient(#000 0, #000 45%, transparent 85%); }
   .stars i {
     position: absolute; width: 3px; height: 3px; border-radius: 50%;
     background: var(--star); opacity: .35;
@@ -64,7 +63,7 @@
   .stars i:nth-child(5n) { width: 4px; height: 4px; opacity: .5; }
   .ground {
     position: absolute; left: -6vw; right: -6vw; bottom: 0; height: 180px; z-index: -1;
-    background: linear-gradient(180deg, var(--ground) 0%, var(--ground) 45%, #344480 100%);
+    background: var(--ground);
     border-radius: 60% 60% 0 0 / 100% 100% 0 0;
     box-shadow: 0 -3px 0 var(--rim);
   }
@@ -215,6 +214,9 @@
     <i style="left:72%;top:24%"></i><i style="left:23%;top:32%"></i><i style="left:94%;top:46%"></i>
     <i style="left:6%;top:55%"></i><i style="left:40%;top:22%"></i><i style="left:64%;top:40%"></i>
     <i style="left:36%;top:52%"></i><i style="left:78%;top:58%"></i><i style="left:18%;top:66%"></i>
+    <i style="left:17.2%;top:9.1%"></i><i style="left:9.8%;top:27.7%"></i><i style="left:37.4%;top:20.3%"></i><i style="left:50.7%;top:0.6%"></i><i style="left:43.8%;top:0.3%"></i><i style="left:11.5%;top:0.8%"></i><i style="left:80.7%;top:14.0%"></i><i style="left:24.0%;top:1.9%"></i><i style="left:92.1%;top:26.1%"></i><i style="left:40.3%;top:22.8%"></i>
+    <i style="left:7.4%;top:52.9%"></i><i style="left:30.2%;top:43.1%"></i><i style="left:14.1%;top:2.5%"></i><i style="left:79.7%;top:8.4%"></i><i style="left:57.7%;top:3.6%"></i><i style="left:38.0%;top:26.9%"></i><i style="left:8.9%;top:21.0%"></i><i style="left:22.4%;top:0.6%"></i><i style="left:43.2%;top:29.7%"></i><i style="left:58.0%;top:8.6%"></i>
+    <i style="left:31.2%;top:15.5%"></i><i style="left:68.7%;top:38.1%"></i><i style="left:57.0%;top:5.8%"></i><i style="left:85.3%;top:19.6%"></i><i style="left:30.1%;top:33.2%"></i><i style="left:14.1%;top:53.3%"></i><i style="left:74.2%;top:13.6%"></i><i style="left:49.0%;top:2.7%"></i><i style="left:65.8%;top:0.3%"></i><i style="left:56.9%;top:35.8%"></i>
   </div>
 </div>
 <div class="ground" aria-hidden="true"></div>
@@ -339,16 +341,12 @@
   })();
 </script>
 <script>
-  // iOS bounces past the end of the page and shows the fixed sky underneath the ground.
-  // While it does, lift the sky by the same distance so the gap shows the page's navy instead.
+  // Overscroll shows the root colour: night when bouncing past the top, the ground when past the bottom.
   (function () {
-    var sky = document.querySelector('.sky');
-    if (!sky) return;
-    function lift() {
-      var over = window.scrollY - (document.documentElement.scrollHeight - window.innerHeight);
-      sky.style.transform = over > 0 ? 'translateY(' + (-over) + 'px)' : '';
-    }
-    window.addEventListener('scroll', lift, { passive: true });
+    var root = document.documentElement;
+    function tint() { root.style.backgroundColor = window.scrollY > window.innerHeight / 2 ? '#1a1838' : ''; }
+    window.addEventListener('scroll', tint, { passive: true });
+    tint();
   })();
 </script>
 </body>
