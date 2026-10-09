@@ -127,7 +127,7 @@
   <h1>Two minutes on how it’s going</h1>
   <div class="offer"><p><strong>Finish this and the full version of Staries is yours free when it launches.</strong> I’ll email you a code for the unlimited-stories unlock on launch day.</p></div>
 
-  <form class="survey" action="https://buttondown.com/api/emails/embed-subscribe/stariesapp" method="post">
+  <form class="survey" action="https://staries-survey.staries.workers.dev/" method="post">
     <input type="hidden" name="tag" value="beta">
     <input type="hidden" name="tag" value="survey-done">
     <input type="hidden" name="metadata__survey_round" id="round" value="">
@@ -147,9 +147,9 @@
       <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email"></div>
 
     <button type="submit" class="submit">Send and claim my free unlock</button>
-    <p class="fine">One unlock per person, for people who’ve tried the beta. Your answers and email are stored with Buttondown and Cloudflare and only used for Staries. <a href="../../privacy/">Privacy</a></p>
+    <p class="fine">One unlock per person, for people who’ve tried the beta. Your answers and email are stored with beehiiv and Cloudflare and only used for Staries. <a href="../../privacy/">Privacy</a></p>
   </form>
-  <p class="thanks" role="status" aria-live="polite" hidden>Thank you. Check your inbox and tap the link to confirm your email, so your launch code can reach you.</p>
+  <p class="thanks" role="status" aria-live="polite" hidden>Thank you. Your launch code will come to this address.</p>
 
   <footer><a href="../../">staries.app</a></footer>
 </main>
@@ -165,13 +165,12 @@
       e.preventDefault();
       var button = form.querySelector('button');
       button.disabled = true;
-      var data = new FormData(form);
-      // Answers are also kept in our own database (workers/survey); a failure there never blocks the sign-up.
-      var store = fetch('https://staries-survey.staries.workers.dev/', { method: 'POST', body: data }).catch(function () {});
-      fetch(form.action, { method: 'POST', mode: 'no-cors', body: data })
-        .then(function () { return store; })
-        .then(function () { form.hidden = true; thanks.hidden = false; window.scrollTo(0, 0); })
-        .catch(function () { button.disabled = false; form.submit(); });
+      fetch(form.action, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(form) })
+        .then(function (r) {
+          if (!r.ok) throw new Error('signup failed');
+          form.hidden = true; thanks.hidden = false; window.scrollTo(0, 0);
+        })
+        .catch(function () { button.disabled = false; button.textContent = 'Try again'; });
     });
   })();
 </script>

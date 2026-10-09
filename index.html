@@ -267,13 +267,13 @@
     <a class="join" href="beta/?from=site">Join the beta</a>
     <button type="button" class="email-toggle" aria-expanded="false" aria-controls="updates">Or get launch news by email</button>
   </div>
-  <form id="updates" action="https://buttondown.com/api/emails/embed-subscribe/stariesapp" method="post" hidden>
+  <form id="updates" action="https://staries-survey.staries.workers.dev/" method="post" hidden>
     <input type="hidden" name="tag" value="waitlist">
     <label for="email" hidden>Email</label>
     <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email">
     <button type="submit">Keep me posted</button>
   </form>
-  <p class="thanks" role="status" aria-live="polite" hidden>Nearly there. Check your inbox and tap the link to confirm.</p>
+  <p class="thanks" role="status" aria-live="polite" hidden>You’re on the list. I’ll be in touch.</p>
   <p class="trust rise" style="--d:.55s">iPhone, iOS 26 or later. Free while in beta. We never see your stories.</p>
 
   <section class="screens">
@@ -335,7 +335,7 @@
     });
   })();
   (function () {
-    // Sign up without leaving the page. If the request can't be sent, fall back to a normal form post.
+    // Sign up without leaving the page. If it fails, the button offers another try.
     var form = document.querySelector('form');
     var thanks = document.querySelector('.thanks');
     var sparkle = document.querySelector('.sparkle');
@@ -344,13 +344,14 @@
       e.preventDefault();
       var button = form.querySelector('button');
       button.disabled = true;
-      fetch(form.action, { method: 'POST', mode: 'no-cors', body: new FormData(form) })
-        .then(function () {
+      fetch(form.action, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(form) })
+        .then(function (r) {
+          if (!r.ok) throw new Error('signup failed');
           form.hidden = true;
           thanks.hidden = false;
           if (sparkle) { sparkle.classList.remove('flare'); void sparkle.getBoundingClientRect(); sparkle.classList.add('flare'); }
         })
-        .catch(function () { button.disabled = false; form.submit(); });
+        .catch(function () { button.disabled = false; button.textContent = 'Try again'; });
     });
   })();
 </script>
