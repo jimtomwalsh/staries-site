@@ -219,7 +219,17 @@
     // Each channel gets its own TestFlight group so App Store Connect shows where testers came from.
     // ?from=<channel> picks that group's public link; anything unknown falls back to the main link.
     var LINKS = {
-      default: 'https://testflight.apple.com/join/SFzxg8WA'
+      default: 'https://testflight.apple.com/join/SFzxg8WA',
+      site: 'https://testflight.apple.com/join/7uBPFMQp',
+      'reddit-au': 'https://testflight.apple.com/join/4xU1KzRX',
+      reddit: 'https://testflight.apple.com/join/HW2d4wPX',
+      coaches: 'https://testflight.apple.com/join/BDJffNZJ',
+      unis: 'https://testflight.apple.com/join/z1BAsU5j',
+      newsletters: 'https://testflight.apple.com/join/C3Y78nYe',
+      communities: 'https://testflight.apple.com/join/5t3qFrAR',
+      launch: 'https://testflight.apple.com/join/em7AEr1z',
+      testflight: 'https://testflight.apple.com/join/NkJgcgPe',
+      hn: 'https://testflight.apple.com/join/1CQQMDnh'
     };
     var from = '';
     try { from = (new URLSearchParams(location.search).get('from') || '').toLowerCase().replace(/[^a-z0-9-]/g, '').slice(0, 40); } catch (e) {}
