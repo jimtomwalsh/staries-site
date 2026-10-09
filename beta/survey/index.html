@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2b3a6e">
+<title>Beta survey · Staries</title>
+<meta name="description" content="Two minutes of feedback on the Staries beta. Finish it and the full version is yours free at launch.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../../icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+<style>
+  :root {
+    --night: #070b1c;
+    --sky-top: #2b3a6e;
+    --sky-mid: #3c4384;
+    --ground: #1a1838;
+    --gold: #ffe08a;
+    --star: #fff6e0;
+    --ink: #fff6e0;
+    --ink-soft: rgba(255,246,224,.72);
+    --ink-faint: rgba(255,246,224,.45);
+    --glass: rgba(255,255,255,.08);
+    --glass-edge: rgba(255,255,255,.18);
+  }
+  * { box-sizing: border-box; }
+  html { background-color: #344480; }
+  body {
+    margin: 0; min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Inter, system-ui, sans-serif;
+    color: var(--ink); -webkit-font-smoothing: antialiased;
+    background: linear-gradient(180deg, var(--night) 0, var(--sky-top) 45%, var(--sky-mid) 80%, #344480 100%) fixed;
+  }
+  main {
+    max-width: 34em; margin: 0 auto;
+    padding: calc(8vh + env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) calc(80px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  }
+  .back { font-size: 15px; color: var(--gold); text-decoration: none; }
+  .back:hover { text-decoration: underline; }
+  .eyebrow { margin: 28px 0 10px; font-size: 17px; font-weight: 500; color: var(--gold); }
+  h1 { font-size: clamp(30px, 7vw, 42px); line-height: 1.1; letter-spacing: -.02em; margin: 0 0 14px; }
+  .lede { font-size: 19px; line-height: 1.45; color: var(--ink-soft); margin: 0 0 32px; }
+  h2 { font-size: 19px; margin: 40px 0 12px; color: var(--gold); font-weight: 600; }
+  p, li { font-size: 17px; line-height: 1.55; color: var(--ink-soft); }
+  p { margin: 0 0 14px; }
+  strong { color: var(--ink); font-weight: 600; }
+  a { color: var(--ink); }
+  ol.x { list-style: none; padding: 0; margin: 0 0 16px; display: grid; gap: 12px; }
+  ol.x li {
+    display: grid; grid-template-columns: 32px 1fr; gap: 14px; align-items: start;
+    padding: 16px; background: var(--glass); border: 1px solid var(--glass-edge); border-radius: 18px;
+    -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);
+  }
+  ol.x li > span:first-child {
+    width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center;
+    background: var(--gold); color: var(--ground); font-weight: 700; font-size: 16px;
+  }
+  ol.x li p { margin: 0 0 10px; }
+  ol.x li p:last-child { margin: 0; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; height: 48px; padding: 0 22px;
+    font-size: 17px; font-weight: 600; text-decoration: none; border-radius: 24px;
+  }
+  .btn.primary { color: var(--ground); background: var(--gold); }
+  .btn.primary:hover { background: var(--star); }
+  .btn.quiet { color: var(--ink); border: 1px solid var(--glass-edge); background: transparent; }
+  .btn.quiet:hover { border-color: var(--gold); }
+  .need { font-size: 15px; color: var(--ink-faint); }
+  .desktop { padding: 16px; border: 1px dashed var(--glass-edge); border-radius: 18px; margin: 0 0 16px; }
+  .desktop code { color: var(--ink); font-size: 16px; }
+  form { display: flex; gap: 8px; max-width: 420px; }
+  input[type=email] {
+    flex: 1; min-width: 0; height: 52px; padding: 0 18px;
+    font: inherit; font-size: 17px; color: var(--ink);
+    background: var(--glass); border: 1px solid var(--glass-edge); border-radius: 26px; outline: none;
+  }
+  input[type=email]::placeholder { color: var(--ink-faint); }
+  input[type=email]:focus { border-color: var(--gold); }
+  form button {
+    height: 52px; padding: 0 22px; flex-shrink: 0;
+    font: inherit; font-size: 17px; font-weight: 600; color: var(--ground);
+    background: var(--gold); border: 0; border-radius: 26px; cursor: pointer;
+  }
+  form button:hover { background: var(--star); }
+  .thanks { color: var(--ink); }
+  .android { margin: 18px 0 0; padding: 14px 16px; border: 1px solid var(--glass-edge); border-radius: 18px; }
+  .android summary { cursor: pointer; font-size: 16px; font-weight: 600; color: var(--ink); }
+  .android p:first-of-type { margin-top: 12px; }
+  .android form { margin-bottom: 4px; }
+  [hidden] { display: none !important; }
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+  footer { margin-top: 56px; font-size: 13px; color: var(--ink-faint); }
+  footer a { color: inherit; }
+
+  fieldset { border: 0; margin: 0 0 26px; padding: 0; }
+  legend { font-size: 17px; font-weight: 600; color: var(--ink); margin: 0 0 10px; padding: 0; }
+  .opts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .opts label { position: relative; }
+  .opts input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+  .opts span { display: inline-block; padding: 10px 16px; border-radius: 22px; font-size: 16px; color: var(--ink-soft); background: var(--glass); border: 1px solid var(--glass-edge); }
+  .opts input:checked + span { color: var(--ground); background: var(--gold); border-color: var(--gold); font-weight: 600; }
+  .opts input:focus-visible + span { outline: 2px solid var(--gold); outline-offset: 2px; }
+  .field { display: grid; gap: 8px; margin: 0 0 26px; }
+  .field > label { font-size: 17px; font-weight: 600; color: var(--ink); }
+  .hint { font-size: 14px; color: var(--ink-faint); font-weight: 400; }
+  input[type=text], textarea, .survey input[type=email] {
+    width: 100%; min-width: 0; font: inherit; font-size: 17px; color: var(--ink);
+    background: var(--glass); border: 1px solid var(--glass-edge); border-radius: 16px; padding: 12px 16px; outline: none;
+  }
+  .survey input[type=email] { height: 52px; border-radius: 26px; }
+  textarea { min-height: 96px; resize: vertical; }
+  input[type=text]:focus, textarea:focus { border-color: var(--gold); }
+  .check { display: flex; gap: 10px; align-items: flex-start; font-size: 16px; color: var(--ink-soft); margin: 0 0 26px; }
+  .check input { width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--gold); }
+  .survey { display: block; max-width: none; }
+  .submit { height: 52px; padding: 0 28px; font: inherit; font-size: 17px; font-weight: 600; color: var(--ground); background: var(--gold); border: 0; border-radius: 26px; cursor: pointer; }
+  .submit:hover { background: var(--star); }
+  .offer { padding: 16px; border-radius: 18px; background: var(--glass); border: 1px solid var(--gold); margin: 0 0 32px; }
+  .offer p { margin: 0; color: var(--ink); }
+  .fine { font-size: 14px; color: var(--ink-faint); margin-top: 14px; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../">← Beta</a>
+  <p class="eyebrow">Staries beta survey</p>
+  <h1>Two minutes on how it’s going</h1>
+  <div class="offer"><p><strong>Finish this and the full version of Staries is yours free when it launches.</strong> I’ll email you a code for the unlimited-stories unlock on launch day.</p></div>
+
+  <form class="survey" action="https://buttondown.com/api/emails/embed-subscribe/stariesapp" method="post">
+    <input type="hidden" name="tag" value="beta">
+    <input type="hidden" name="tag" value="survey-done">
+    <input type="hidden" name="metadata__survey_round" id="round" value="">
+
+    <fieldset><legend>Do you have an interview coming up?</legend><div class="opts"><label><input type="radio" name="metadata__interview" value="In the next 2 weeks" required><span>In the next 2 weeks</span></label><label><input type="radio" name="metadata__interview" value="In the next 2 months" required><span>In the next 2 months</span></label><label><input type="radio" name="metadata__interview" value="Not right now" required><span>Not right now</span></label></div></fieldset>
+    <fieldset><legend>How many stories have you added?</legend><div class="opts"><label><input type="radio" name="metadata__stories" value="None yet" required><span>None yet</span></label><label><input type="radio" name="metadata__stories" value="1–2" required><span>1–2</span></label><label><input type="radio" name="metadata__stories" value="3–5" required><span>3–5</span></label><label><input type="radio" name="metadata__stories" value="6 or more" required><span>6 or more</span></label></div></fieldset>
+    <fieldset><legend>Have you rehearsed a story out loud?</legend><div class="opts"><label><input type="radio" name="metadata__rehearsed" value="Yes" required><span>Yes</span></label><label><input type="radio" name="metadata__rehearsed" value="Not yet" required><span>Not yet</span></label><label><input type="radio" name="metadata__rehearsed" value="Tried it and stopped" required><span>Tried it and stopped</span></label></div></fieldset>
+    <fieldset><legend>How would you feel if you could no longer use Staries?</legend><div class="opts"><label><input type="radio" name="metadata__disappointed" value="Very disappointed" required><span>Very disappointed</span></label><label><input type="radio" name="metadata__disappointed" value="Somewhat disappointed" required><span>Somewhat disappointed</span></label><label><input type="radio" name="metadata__disappointed" value="Not disappointed" required><span>Not disappointed</span></label></div></fieldset>
+    <fieldset><legend>If you hadn’t got it free, would you pay once to unlock unlimited stories?</legend><div class="opts"><label><input type="radio" name="metadata__would_pay" value="Yes" required><span>Yes</span></label><label><input type="radio" name="metadata__would_pay" value="Maybe" required><span>Maybe</span></label><label><input type="radio" name="metadata__would_pay" value="No" required><span>No</span></label></div></fieldset>
+
+    <div class="field"><label for="price">What’s the most you’d pay, one time? <span class="hint">Optional</span></label>
+      <input type="text" id="price" name="metadata__max_price" placeholder="e.g. $10" autocomplete="off"></div>
+    <div class="field"><label for="one-thing">What’s the one thing that would make you use it more?</label>
+      <textarea id="one-thing" name="metadata__one_thing" required></textarea></div>
+    <label class="check"><input type="checkbox" id="call" name="metadata__happy_to_call" value="yes"><span>I’m happy to do a 15-minute call about it</span></label>
+    <div class="field"><label for="email">Your email <span class="hint">Where your launch code goes</span></label>
+      <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email"></div>
+
+    <button type="submit" class="submit">Send and claim my free unlock</button>
+    <p class="fine">One unlock per person, for people who’ve tried the beta. Your email is stored with Buttondown and only used for Staries. <a href="../../privacy/">Privacy</a></p>
+  </form>
+  <p class="thanks" role="status" aria-live="polite" hidden>Thank you. Check your inbox and tap the link to confirm your email, so your launch code can reach you.</p>
+
+  <footer><a href="../../">staries.app</a></footer>
+</main>
+<script>
+  (function () {
+    var round = '';
+    try { round = (new URLSearchParams(location.search).get('round') || '').toLowerCase().replace(/[^a-z0-9-]/g, '').slice(0, 20); } catch (e) {}
+    document.getElementById('round').value = round || 'beta';
+    var form = document.querySelector('form');
+    var thanks = document.querySelector('.thanks');
+    if (!window.fetch || !window.FormData) return;
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var button = form.querySelector('button');
+      button.disabled = true;
+      fetch(form.action, { method: 'POST', mode: 'no-cors', body: new FormData(form) })
+        .then(function () { form.hidden = true; thanks.hidden = false; window.scrollTo(0, 0); })
+        .catch(function () { button.disabled = false; form.submit(); });
+    });
+  })();
+</script>
+</body>
+</html>

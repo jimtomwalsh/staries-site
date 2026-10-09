@@ -135,6 +135,19 @@
   figcaption b { display: block; font-size: 19px; font-weight: 600; margin-bottom: 6px; }
   figcaption span { color: var(--ink-soft); font-size: 15px; line-height: 1.45; }
   .eyebrow, h1, .lede, .trust, figcaption span { text-wrap: balance; }
+  .cta { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .join {
+    display: inline-flex; align-items: center; justify-content: center; height: 56px; padding: 0 34px;
+    font-size: 19px; font-weight: 600; color: var(--ground); text-decoration: none;
+    background: var(--gold); border-radius: 28px;
+    transition: transform .25s ease, box-shadow .25s ease, background-color .25s ease;
+  }
+  .join:hover { background: var(--star); transform: translateY(-1px); box-shadow: 0 8px 28px -6px rgba(255,224,138,.6); }
+  .join:active { transform: scale(.98); box-shadow: none; }
+  .join:focus-visible, .email-toggle:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+  .email-toggle { padding: 4px 8px; font: inherit; font-size: 15px; color: var(--ink-soft); background: none; border: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+  .email-toggle:hover { color: var(--ink); }
+  #updates { margin-top: 14px; }
   .trust { margin: 14px 0 0; font-size: 14px; font-weight: 500; color: var(--ink-soft); }
   .maker { margin: 88px auto 0; width: 100%; max-width: 1000px; padding: 24px 26px; text-align: left; background: var(--glass); border: 1px solid var(--glass-edge); border-radius: 22px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
   .maker p { margin: 0; font-size: 16px; line-height: 1.55; color: var(--ink); }
@@ -250,15 +263,18 @@
     </div>
   </div>
 
-  <form class="rise" style="--d:.45s" action="https://buttondown.com/api/emails/embed-subscribe/stariesapp" method="post">
+  <div class="cta rise" style="--d:.45s">
+    <a class="join" href="beta/?from=site">Join the beta</a>
+    <button type="button" class="email-toggle" aria-expanded="false" aria-controls="updates">Or get launch news by email</button>
+  </div>
+  <form id="updates" action="https://buttondown.com/api/emails/embed-subscribe/stariesapp" method="post" hidden>
     <input type="hidden" name="tag" value="waitlist">
-    <input type="hidden" name="tag" value="beta">
     <label for="email" hidden>Email</label>
     <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email">
-    <button type="submit">Get early access</button>
+    <button type="submit">Keep me posted</button>
   </form>
   <p class="thanks" role="status" aria-live="polite" hidden>Nearly there. Check your inbox and tap the link to confirm.</p>
-  <p class="trust rise" style="--d:.55s">No subscription. We never see your stories.</p>
+  <p class="trust rise" style="--d:.55s">iPhone, iOS 26 or later. Free while in beta. We never see your stories.</p>
 
   <section class="screens">
     <figure class="reveal">
@@ -281,7 +297,7 @@
     <p class="sig">James – Creator of Staries</p>
   </aside>
 
-  <footer>The iPhone beta is open: <a href="beta/">join it here</a>. <a href="mailto:hello@staries.app">hello@staries.app</a> · <a href="privacy/">Privacy</a></footer>
+  <footer><a href="mailto:hello@staries.app">hello@staries.app</a> · <a href="privacy/">Privacy</a></footer>
 </main>
 <script>
   document.documentElement.classList.add('js');
@@ -305,6 +321,18 @@
       entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
     }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
     items.forEach(function (el) { io.observe(el); });
+  })();
+  (function () {
+    // The mailing list sits behind a link; the beta is the main way in.
+    var toggle = document.querySelector('.email-toggle');
+    var form = document.getElementById('updates');
+    if (!toggle || !form) return;
+    toggle.addEventListener('click', function () {
+      form.hidden = false;
+      toggle.hidden = true;
+      var input = form.querySelector('input[type=email]');
+      if (input) input.focus();
+    });
   })();
   (function () {
     // Sign up without leaving the page. If the request can't be sent, fall back to a normal form post.
