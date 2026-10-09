@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2b3a6e">
+<title>Join the beta · Staries</title>
+<meta name="description" content="Try Staries free on iPhone before it launches. Prepare and rehearse your answers to “Tell me about a time when…”">
+<meta property="og:title" content="Join the Staries beta">
+<meta property="og:description" content="Prepare and rehearse your answers to “Tell me about a time when…”. Free iPhone beta.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://staries.app/beta/">
+<meta property="og:image" content="https://staries.app/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<style>
+  :root {
+    --night: #070b1c;
+    --sky-top: #2b3a6e;
+    --sky-mid: #3c4384;
+    --ground: #1a1838;
+    --gold: #ffe08a;
+    --star: #fff6e0;
+    --ink: #fff6e0;
+    --ink-soft: rgba(255,246,224,.72);
+    --ink-faint: rgba(255,246,224,.45);
+    --glass: rgba(255,255,255,.08);
+    --glass-edge: rgba(255,255,255,.18);
+  }
+  * { box-sizing: border-box; }
+  html { background-color: #344480; }
+  body {
+    margin: 0; min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Inter, system-ui, sans-serif;
+    color: var(--ink); -webkit-font-smoothing: antialiased;
+    background: linear-gradient(180deg, var(--night) 0, var(--sky-top) 45%, var(--sky-mid) 80%, #344480 100%) fixed;
+  }
+  main {
+    max-width: 34em; margin: 0 auto;
+    padding: calc(8vh + env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) calc(80px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  }
+  .back { font-size: 15px; color: var(--gold); text-decoration: none; }
+  .back:hover { text-decoration: underline; }
+  .eyebrow { margin: 28px 0 10px; font-size: 17px; font-weight: 500; color: var(--gold); }
+  h1 { font-size: clamp(30px, 7vw, 42px); line-height: 1.1; letter-spacing: -.02em; margin: 0 0 14px; }
+  .lede { font-size: 19px; line-height: 1.45; color: var(--ink-soft); margin: 0 0 32px; }
+  h2 { font-size: 19px; margin: 40px 0 12px; color: var(--gold); font-weight: 600; }
+  p, li { font-size: 17px; line-height: 1.55; color: var(--ink-soft); }
+  p { margin: 0 0 14px; }
+  strong { color: var(--ink); font-weight: 600; }
+  a { color: var(--ink); }
+  ol.steps { list-style: none; padding: 0; margin: 0 0 16px; display: grid; gap: 12px; }
+  ol.steps li {
+    display: grid; grid-template-columns: 32px 1fr; gap: 14px; align-items: start;
+    padding: 16px; background: var(--glass); border: 1px solid var(--glass-edge); border-radius: 18px;
+    -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);
+  }
+  ol.steps li > span:first-child {
+    width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center;
+    background: var(--gold); color: var(--ground); font-weight: 700; font-size: 16px;
+  }
+  ol.steps li p { margin: 0 0 10px; }
+  ol.steps li p:last-child { margin: 0; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; height: 48px; padding: 0 22px;
+    font-size: 17px; font-weight: 600; text-decoration: none; border-radius: 24px;
+  }
+  .btn.primary { color: var(--ground); background: var(--gold); }
+  .btn.primary:hover { background: var(--star); }
+  .btn.quiet { color: var(--ink); border: 1px solid var(--glass-edge); background: transparent; }
+  .btn.quiet:hover { border-color: var(--gold); }
+  .need { font-size: 15px; color: var(--ink-faint); }
+  .desktop { padding: 16px; border: 1px dashed var(--glass-edge); border-radius: 18px; margin: 0 0 16px; }
+  .desktop code { color: var(--ink); font-size: 16px; }
+  form { display: flex; gap: 8px; max-width: 420px; }
+  input[type=email] {
+    flex: 1; min-width: 0; height: 52px; padding: 0 18px;
+    font: inherit; font-size: 17px; color: var(--ink);
+    background: var(--glass); border: 1px solid var(--glass-edge); border-radius: 26px; outline: none;
+  }
+  input[type=email]::placeholder { color: var(--ink-faint); }
+  input[type=email]:focus { border-color: var(--gold); }
+  form button {
+    height: 52px; padding: 0 22px; flex-shrink: 0;
+    font: inherit; font-size: 17px; font-weight: 600; color: var(--ground);
+    background: var(--gold); border: 0; border-radius: 26px; cursor: pointer;
+  }
+  form button:hover { background: var(--star); }
+  .thanks { color: var(--ink); }
+  [hidden] { display: none !important; }
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+  footer { margin-top: 56px; font-size: 13px; color: var(--ink-faint); }
+  footer a { color: inherit; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../">← Staries</a>
+  <p class="eyebrow">Free iPhone beta</p>
+  <h1>Get ready for “Tell me about a time when…”</h1>
+  <p class="lede">Write down your real work stories once. Staries shapes each one into the STAR answer interviewers listen for, then you rehearse out loud and it shows what you covered and what you forgot.</p>
+
+  <div class="desktop" id="desktop" hidden>
+    <p><strong>Open this page on your iPhone.</strong> The beta installs through Apple’s TestFlight app, so it has to start there.</p>
+    <p style="margin:0">Go to <code>staries.app/beta</code> on your phone.</p>
+  </div>
+
+  <ol class="steps">
+    <li>
+      <span>1</span>
+      <div>
+        <p><strong>Get Apple’s TestFlight app.</strong> It’s how Apple delivers beta apps. Skip this if you already have it.</p>
+        <p><a class="btn quiet" href="https://apps.apple.com/app/testflight/id899247664">TestFlight on the App Store</a></p>
+      </div>
+    </li>
+    <li>
+      <span>2</span>
+      <div>
+        <p><strong>Join the Staries beta.</strong> TestFlight opens and installs it.</p>
+        <p><a class="btn primary" id="join" href="https://testflight.apple.com/join/SFzxg8WA">Join the beta</a></p>
+      </div>
+    </li>
+  </ol>
+  <p class="need">iPhone with iOS 26 or later. No account, and your stories stay on your phone and in your own iCloud.</p>
+
+  <h2>Then try this</h2>
+  <p>Add two or three real stories from your work, then rehearse one out loud. That’s where Staries earns its place, and it’s what I most want to hear about.</p>
+  <p>To send feedback, take a screenshot in the app and tap Share Beta Feedback, or email <a href="mailto:hello@staries.app">hello@staries.app</a>. Blunt is good.</p>
+
+  <h2>Stay in the loop</h2>
+  <p>Leave your email and I’ll send the occasional note when something big changes, and one when Staries launches. Optional.</p>
+  <form action="https://buttondown.com/api/emails/embed-subscribe/stariesapp" method="post">
+    <input type="hidden" name="tag" value="beta">
+    <input type="hidden" name="tag" value="public-beta">
+    <input type="hidden" name="metadata__source" id="source" value="">
+    <label for="email" hidden>Email</label>
+    <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email">
+    <button type="submit">Keep me posted</button>
+  </form>
+  <p class="thanks" role="status" aria-live="polite" hidden>Nearly there. Check your inbox and tap the link to confirm.</p>
+
+  <footer><a href="../">staries.app</a> · <a href="../privacy/">Privacy</a></footer>
+</main>
+<script>
+  (function () {
+    // Each channel gets its own TestFlight group so App Store Connect shows where testers came from.
+    // ?from=<channel> picks that group's public link; anything unknown falls back to the main link.
+    var LINKS = {
+      default: 'https://testflight.apple.com/join/SFzxg8WA'
+    };
+    var from = '';
+    try { from = (new URLSearchParams(location.search).get('from') || '').toLowerCase().replace(/[^a-z0-9-]/g, '').slice(0, 40); } catch (e) {}
+    var join = document.getElementById('join');
+    join.href = LINKS[from] || LINKS.default;
+    document.getElementById('source').value = from || 'direct';
+
+    var ua = navigator.userAgent || '';
+    var mobile = /iPhone|iPod|Android/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+    if (!mobile) document.getElementById('desktop').hidden = false;
+  })();
+  (function () {
+    // Sign up without leaving the page. If the request can't be sent, fall back to a normal form post.
+    var form = document.querySelector('form');
+    var thanks = document.querySelector('.thanks');
+    if (!form || !window.fetch || !window.FormData) return;
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var button = form.querySelector('button');
+      button.disabled = true;
+      fetch(form.action, { method: 'POST', mode: 'no-cors', body: new FormData(form) })
+        .then(function () { form.hidden = true; thanks.hidden = false; })
+        .catch(function () { button.disabled = false; form.submit(); });
+    });
+  })();
+</script>
+</body>
+</html>
