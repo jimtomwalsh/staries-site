@@ -231,6 +231,9 @@
       testflight: 'https://testflight.apple.com/join/NkJgcgPe',
       hn: 'https://testflight.apple.com/join/1CQQMDnh'
     };
+    // Per-post sources share their channel's group; the form still records the exact ?from=.
+    ['sideproject', 'indiehackers', 'buildinpublic'].forEach(function (k) { LINKS['reddit-' + k] = LINKS.reddit; });
+    ['testflight', 'alphaandbetausers', 'betatests'].forEach(function (k) { LINKS['reddit-' + k] = LINKS.testflight; });
     var from = '';
     try { from = (new URLSearchParams(location.search).get('from') || '').toLowerCase().replace(/[^a-z0-9-]/g, '').slice(0, 40); } catch (e) {}
     document.getElementById('join').href = LINKS[from] || LINKS.default;
