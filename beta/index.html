@@ -183,14 +183,14 @@
     <h1>Staries isn’t on Android yet</h1>
     <p class="lede">Leave your email and I’ll tell you if an Android version happens. How many people ask is what decides it.</p>
     <div class="card" style="margin-top:0">
-      <form action="https://buttondown.com/api/emails/embed-subscribe/stariesapp" method="post">
+      <form action="https://staries-survey.staries.workers.dev/" method="post">
         <input type="hidden" name="tag" value="android">
         <input type="hidden" name="metadata__source" class="source" value="">
         <label for="android-email" hidden>Email</label>
         <input type="email" id="android-email" name="email" placeholder="you@example.com" required autocomplete="email">
         <button type="submit">Tell me</button>
       </form>
-      <p class="thanks" role="status" aria-live="polite" hidden><b>Thanks.</b> Check your inbox and tap Confirm, and you’re on the list.</p>
+      <p class="thanks" role="status" aria-live="polite" hidden><b>Thanks.</b> You’re on the list.</p>
     </div>
   </section>
 
@@ -198,7 +198,7 @@
   <div class="card" id="offer">
     <h2>Want the full version <b>free</b> at launch?</h2>
     <p>Leave your email. After a week or so I’ll send you a two-minute survey, and when you’ve done it the full version is yours free when Staries launches.</p>
-    <form action="https://buttondown.com/api/emails/embed-subscribe/stariesapp" method="post">
+    <form action="https://staries-survey.staries.workers.dev/" method="post">
       <input type="hidden" name="tag" value="beta">
       <input type="hidden" name="tag" value="public-beta">
       <input type="hidden" name="metadata__source" class="source" value="">
@@ -206,7 +206,7 @@
       <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email">
       <button type="submit">Count me in</button>
     </form>
-    <p class="thanks" role="status" aria-live="polite" hidden><b>Nearly done.</b> Check your inbox and tap Confirm so the survey reaches you.</p>
+    <p class="thanks" role="status" aria-live="polite" hidden><b>You’re in.</b> The survey will come to this address.</p>
     <p class="fine">Just the survey and a note at launch. No spam, unsubscribe any time.</p>
   </div>
 
@@ -243,7 +243,7 @@
     });
   })();
   (function () {
-    // Sign up without leaving the page. If the request can't be sent, fall back to a normal form post.
+    // Sign up without leaving the page. If it fails, the button offers another try.
     if (!window.fetch || !window.FormData) return;
     [].forEach.call(document.querySelectorAll('form'), function (form) {
       var thanks = form.nextElementSibling;
@@ -251,9 +251,12 @@
         e.preventDefault();
         var button = form.querySelector('button');
         button.disabled = true;
-        fetch(form.action, { method: 'POST', mode: 'no-cors', body: new FormData(form) })
-          .then(function () { form.hidden = true; thanks.hidden = false; })
-          .catch(function () { button.disabled = false; form.submit(); });
+        fetch(form.action, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(form) })
+          .then(function (r) {
+            if (!r.ok) throw new Error('signup failed');
+            form.hidden = true; thanks.hidden = false;
+          })
+          .catch(function () { button.disabled = false; button.textContent = 'Try again'; });
       });
     });
   })();
