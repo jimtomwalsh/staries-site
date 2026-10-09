@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#2b3a6e">
+<meta name="theme-color" content="#070b1c">
 <title>Join the beta · Staries</title>
 <meta name="description" content="Try Staries free on iPhone before it launches. Prepare and rehearse your answers to “Tell me about a time when…”">
 <meta property="og:title" content="Join the Staries beta">
@@ -20,149 +20,199 @@
   :root {
     --night: #070b1c;
     --sky-top: #2b3a6e;
-    --sky-mid: #3c4384;
     --ground: #1a1838;
-    --gold: #ffe08a;
+    --rim: rgba(255,196,150,.75);
     --star: #fff6e0;
+    --gold: #ffe08a;
     --ink: #fff6e0;
     --ink-soft: rgba(255,246,224,.72);
-    --ink-faint: rgba(255,246,224,.45);
+    --ink-faint: rgba(255,246,224,.5);
     --glass: rgba(255,255,255,.08);
     --glass-edge: rgba(255,255,255,.18);
   }
   * { box-sizing: border-box; }
-  html { background-color: #344480; }
+  html, body { margin: 0; min-height: 100%; }
+  html { background-color: var(--night); overflow-x: hidden; overflow-x: clip; }
   body {
-    margin: 0; min-height: 100vh;
+    position: relative; overflow-x: hidden;
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Inter, system-ui, sans-serif;
     color: var(--ink); -webkit-font-smoothing: antialiased;
-    background: linear-gradient(180deg, var(--night) 0, var(--sky-top) 45%, var(--sky-mid) 80%, #344480 100%) fixed;
   }
+  .sky {
+    position: absolute; inset: 0; z-index: -1; overflow: hidden;
+    background:
+      radial-gradient(70% 22% at 50% 100%, rgba(255,185,138,.5), rgba(255,185,138,0) 70%),
+      linear-gradient(180deg, var(--night) 0%, #0d1434 25%, #1d2458 50%, var(--sky-top) 75%, #5a4f86 100%);
+  }
+  .stars { position: absolute; inset: 0; -webkit-mask-image: linear-gradient(#000 0, #000 45%, transparent 85%); mask-image: linear-gradient(#000 0, #000 45%, transparent 85%); }
+  .stars i { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: var(--star); opacity: .35; }
+  .stars i:nth-child(odd) { width: 2px; height: 2px; opacity: .3; }
+  .stars i:nth-child(5n) { width: 4px; height: 4px; opacity: .5; }
+  .ground {
+    position: absolute; left: -6vw; right: -6vw; bottom: 0; height: 120px; z-index: -1;
+    background: var(--ground); border-radius: 60% 60% 0 0 / 100% 100% 0 0; box-shadow: 0 -3px 0 var(--rim);
+  }
+
   main {
-    max-width: 34em; margin: 0 auto;
-    padding: calc(8vh + env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) calc(80px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+    max-width: 30em; margin: 0 auto; min-height: 100vh; min-height: 100svh;
+    padding: calc(6vh + env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) calc(150px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+    display: flex; flex-direction: column; align-items: center; text-align: center;
   }
-  .back { font-size: 15px; color: var(--gold); text-decoration: none; }
-  .back:hover { text-decoration: underline; }
-  .eyebrow { margin: 28px 0 10px; font-size: 17px; font-weight: 500; color: var(--gold); }
-  h1 { font-size: clamp(30px, 7vw, 42px); line-height: 1.1; letter-spacing: -.02em; margin: 0 0 14px; }
-  .lede { font-size: 19px; line-height: 1.45; color: var(--ink-soft); margin: 0 0 32px; }
-  h2 { font-size: 19px; margin: 40px 0 12px; color: var(--gold); font-weight: 600; }
-  p, li { font-size: 17px; line-height: 1.55; color: var(--ink-soft); }
-  p { margin: 0 0 14px; }
-  strong { color: var(--ink); font-weight: 600; }
-  a { color: var(--ink); }
-  ol.steps { list-style: none; padding: 0; margin: 0 0 16px; display: grid; gap: 12px; }
-  ol.steps li {
-    display: grid; grid-template-columns: 32px 1fr; gap: 14px; align-items: start;
-    padding: 16px; background: var(--glass); border: 1px solid var(--glass-edge); border-radius: 18px;
+  .back { align-self: flex-start; font-size: 15px; color: var(--ink-soft); text-decoration: none; }
+  .back:hover { color: var(--ink); }
+  .sparkle { width: 84px; height: 84px; margin: 20px 0 22px; overflow: visible; }
+  .sparkle .halo { transform-box: fill-box; transform-origin: center; animation: halo 4.8s ease-in-out infinite; }
+  @keyframes halo { 0%, 100% { opacity: .75; transform: scale(.94); } 50% { opacity: 1; transform: scale(1.06); } }
+  .eyebrow { margin: 0 0 10px; font-size: 16px; font-weight: 500; color: var(--gold); }
+  h1 { font-size: clamp(30px, 7.5vw, 40px); line-height: 1.1; letter-spacing: -.02em; margin: 0 0 12px; text-wrap: balance; }
+  .lede { font-size: 18px; line-height: 1.45; color: var(--ink-soft); margin: 0 0 28px; text-wrap: balance; }
+
+  .join {
+    display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; max-width: 360px; height: 58px;
+    font-size: 19px; font-weight: 600; color: var(--ground); text-decoration: none;
+    background: var(--gold); border-radius: 29px;
+    transition: transform .25s ease, box-shadow .25s ease, background-color .25s ease;
+  }
+  .join:hover { background: var(--star); transform: translateY(-1px); box-shadow: 0 8px 28px -6px rgba(255,224,138,.6); }
+  .join:active { transform: scale(.98); box-shadow: none; }
+  .hint { margin: 12px 0 0; font-size: 14px; line-height: 1.45; color: var(--ink-faint); max-width: 22em; text-wrap: balance; }
+
+  .qr { display: flex; align-items: center; gap: 20px; text-align: left; width: 100%; max-width: 420px; padding: 18px; background: var(--glass); border: 1px solid var(--glass-edge); border-radius: 22px; }
+  .qr .code { flex: none; width: 116px; height: 116px; padding: 10px; background: var(--star); border-radius: 14px; }
+  .qr .code svg { display: block; width: 100%; height: 100%; }
+  .qr p { margin: 0; font-size: 16px; line-height: 1.45; color: var(--ink-soft); }
+  .qr strong { display: block; margin-bottom: 4px; color: var(--ink); font-size: 17px; }
+
+  .card {
+    width: 100%; max-width: 420px; margin-top: 36px; padding: 22px 20px 20px; text-align: left;
+    background: var(--glass); border: 1px solid var(--glass-edge); border-radius: 22px;
     -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);
   }
-  ol.steps li > span:first-child {
-    width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center;
-    background: var(--gold); color: var(--ground); font-weight: 700; font-size: 16px;
-  }
-  ol.steps li p { margin: 0 0 10px; }
-  ol.steps li p:last-child { margin: 0; }
-  .btn {
-    display: inline-flex; align-items: center; justify-content: center; height: 48px; padding: 0 22px;
-    font-size: 17px; font-weight: 600; text-decoration: none; border-radius: 24px;
-  }
-  .btn.primary { color: var(--ground); background: var(--gold); }
-  .btn.primary:hover { background: var(--star); }
-  .btn.quiet { color: var(--ink); border: 1px solid var(--glass-edge); background: transparent; }
-  .btn.quiet:hover { border-color: var(--gold); }
-  .need { font-size: 15px; color: var(--ink-faint); }
-  .offer-line { color: var(--ink); font-size: 16px; padding: 12px 16px; border: 1px solid var(--gold); border-radius: 16px; margin-top: 20px; }
-  .offer-line a { color: var(--gold); }
-  .desktop { padding: 16px; border: 1px dashed var(--glass-edge); border-radius: 18px; margin: 0 0 16px; }
-  .desktop code { color: var(--ink); font-size: 16px; }
-  form { display: flex; gap: 8px; max-width: 420px; }
+  .card h2 { margin: 0 0 6px; font-size: 18px; font-weight: 600; color: var(--ink); }
+  .card h2 b { color: var(--gold); font-weight: 600; }
+  .card p { margin: 0 0 16px; font-size: 15px; line-height: 1.5; color: var(--ink-soft); }
+  form { display: flex; gap: 8px; }
   input[type=email] {
-    flex: 1; min-width: 0; height: 52px; padding: 0 18px;
+    flex: 1; min-width: 0; height: 50px; padding: 0 18px;
     font: inherit; font-size: 17px; color: var(--ink);
-    background: var(--glass); border: 1px solid var(--glass-edge); border-radius: 26px; outline: none;
+    background: rgba(7,11,28,.35); border: 1px solid var(--glass-edge); border-radius: 25px; outline: none;
+    transition: border-color .25s ease, box-shadow .25s ease;
   }
   input[type=email]::placeholder { color: var(--ink-faint); }
-  input[type=email]:focus { border-color: var(--gold); }
+  input[type=email]:focus { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(255,224,138,.16); }
   form button {
-    height: 52px; padding: 0 22px; flex-shrink: 0;
+    height: 50px; padding: 0 20px; flex-shrink: 0;
     font: inherit; font-size: 17px; font-weight: 600; color: var(--ground);
-    background: var(--gold); border: 0; border-radius: 26px; cursor: pointer;
+    background: var(--gold); border: 0; border-radius: 25px; cursor: pointer;
   }
   form button:hover { background: var(--star); }
-  .thanks { color: var(--ink); }
-  .android { margin: 18px 0 0; padding: 14px 16px; border: 1px solid var(--glass-edge); border-radius: 18px; }
-  .android summary { cursor: pointer; font-size: 16px; font-weight: 600; color: var(--ink); }
-  .android p:first-of-type { margin-top: 12px; }
-  .android form { margin-bottom: 4px; }
+  form button:disabled { opacity: .6; cursor: default; }
+  .fine { margin: 10px 0 0 !important; font-size: 13px !important; color: var(--ink-faint) !important; }
+  .thanks { margin: 0 !important; color: var(--ink) !important; font-size: 16px !important; }
+  .thanks b { color: var(--gold); }
+
+  .meta { margin: 28px 0 0; font-size: 14px; line-height: 1.6; color: var(--ink-faint); }
+  .android-link { padding: 0; font: inherit; color: var(--ink-soft); background: none; border: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+  .android-link:hover { color: var(--ink); }
+  footer { margin-top: auto; padding-top: 40px; font-size: 13px; color: var(--ink-faint); }
+  footer a { color: inherit; }
+
   [hidden] { display: none !important; }
   :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
-  footer { margin-top: 56px; font-size: 13px; color: var(--ink-faint); }
-  footer a { color: inherit; }
+  @media (max-width: 400px) {
+    form { flex-direction: column; }
+    input[type=email] { flex: none; width: 100%; }
+    form button { width: 100%; }
+    .qr { flex-direction: column; text-align: center; }
+  }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
 </style>
 </head>
 <body>
+<div class="sky" aria-hidden="true">
+  <div class="stars">
+    <i style="left:14%;top:17%"></i><i style="left:29%;top:10%"></i><i style="left:80%;top:15%"></i>
+    <i style="left:88%;top:32%"></i><i style="left:11%;top:41%"></i><i style="left:55%;top:8%"></i>
+    <i style="left:72%;top:24%"></i><i style="left:23%;top:32%"></i><i style="left:94%;top:46%"></i>
+    <i style="left:6%;top:55%"></i><i style="left:40%;top:22%"></i><i style="left:64%;top:40%"></i>
+    <i style="left:36%;top:52%"></i><i style="left:78%;top:58%"></i><i style="left:18%;top:66%"></i>
+    <i style="left:17.2%;top:9.1%"></i><i style="left:9.8%;top:27.7%"></i><i style="left:37.4%;top:20.3%"></i><i style="left:50.7%;top:0.6%"></i><i style="left:43.8%;top:0.3%"></i><i style="left:11.5%;top:0.8%"></i><i style="left:80.7%;top:14.0%"></i><i style="left:24.0%;top:1.9%"></i><i style="left:92.1%;top:26.1%"></i><i style="left:40.3%;top:22.8%"></i>
+    <i style="left:7.4%;top:52.9%"></i><i style="left:30.2%;top:43.1%"></i><i style="left:14.1%;top:2.5%"></i><i style="left:79.7%;top:8.4%"></i><i style="left:57.7%;top:3.6%"></i><i style="left:38.0%;top:26.9%"></i><i style="left:8.9%;top:21.0%"></i><i style="left:22.4%;top:0.6%"></i><i style="left:43.2%;top:29.7%"></i><i style="left:58.0%;top:8.6%"></i>
+    <i style="left:31.2%;top:15.5%"></i><i style="left:68.7%;top:38.1%"></i><i style="left:57.0%;top:5.8%"></i><i style="left:85.3%;top:19.6%"></i><i style="left:30.1%;top:33.2%"></i><i style="left:14.1%;top:53.3%"></i><i style="left:74.2%;top:13.6%"></i><i style="left:49.0%;top:2.7%"></i><i style="left:65.8%;top:0.3%"></i><i style="left:56.9%;top:35.8%"></i>
+  </div>
+</div>
+<div class="ground" aria-hidden="true"></div>
+
 <main>
   <a class="back" href="../">← Staries</a>
-  <p class="eyebrow">Free iPhone beta</p>
-  <h1>Get ready for “Tell me about a time when…”</h1>
-  <p class="lede">Write down your real work stories once. Staries shapes each one into the STAR answer interviewers listen for, then you rehearse out loud and it shows what you covered and what you forgot.</p>
+  <svg class="sparkle" viewBox="212 130 600 600" aria-hidden="true">
+    <defs>
+      <radialGradient id="hal"><stop offset="0" stop-color="#ffe08a" stop-opacity=".5"/><stop offset=".35" stop-color="#ffe08a" stop-opacity=".19"/><stop offset="1" stop-color="#ffe08a" stop-opacity="0"/></radialGradient>
+      <linearGradient id="sp" gradientUnits="userSpaceOnUse" x1="512" y1="230" x2="512" y2="630"><stop offset="0" stop-color="#fff6e0"/><stop offset="1" stop-color="#ffe08a"/></linearGradient>
+      <radialGradient id="cg"><stop offset="0" stop-color="#fff6e0" stop-opacity=".9"/><stop offset=".35" stop-color="#fff6e0" stop-opacity=".35"/><stop offset="1" stop-color="#fff6e0" stop-opacity="0"/></radialGradient>
+    </defs>
+    <circle class="halo" cx="512" cy="430" r="220" fill="url(#hal)"/>
+    <path class="rays" d="M512.0 230.0 Q530.4 411.6 712.0 430.0 Q530.4 448.4 512.0 630.0 Q493.6 448.4 312.0 430.0 Q493.6 411.6 512.0 230.0 Z M575.6 366.4 Q530.0 430.0 575.6 493.6 Q512.0 448.0 448.4 493.6 Q494.0 430.0 448.4 366.4 Q512.0 412.0 575.6 366.4 Z" fill="url(#sp)"/>
+    <circle cx="512" cy="430" r="83.6" fill="url(#cg)" opacity=".85"/>
+    <circle cx="512" cy="430" r="44" fill="#fff6e0"/>
+  </svg>
 
-  <div class="desktop" id="desktop" hidden>
-    <p><strong>Open this page on your iPhone.</strong> The beta installs through Apple’s TestFlight app, so it has to start there.</p>
-    <p style="margin:0">Go to <code>staries.app/beta</code> on your phone.</p>
+  <!-- iPhone (and the default): one button straight into TestFlight. -->
+  <section id="ios">
+    <p class="eyebrow">Free iPhone beta</p>
+    <h1>Try Staries before it launches</h1>
+    <p class="lede">Shape your work stories into answers for “Tell me about a time when…”, then rehearse them out loud.</p>
+    <a class="join" id="join" href="https://testflight.apple.com/join/SFzxg8WA">Join the beta</a>
+    <p class="hint">Opens Apple’s TestFlight, which installs Staries. If you don’t have TestFlight yet, it walks you through getting it first.</p>
+  </section>
+
+  <!-- Desktop: the beta has to start on the phone, so hand it over with a QR code. -->
+  <section id="desktop" hidden>
+    <p class="eyebrow">Free iPhone beta</p>
+    <h1>Try Staries before it launches</h1>
+    <p class="lede">Shape your work stories into answers for “Tell me about a time when…”, then rehearse them out loud.</p>
+    <div class="qr">
+      <div class="code"><svg viewBox="0 0 25 25" shape-rendering="crispEdges" aria-hidden="true"><path fill="#1a1838" d="M0 0h1v1h-1zM1 0h1v1h-1zM2 0h1v1h-1zM3 0h1v1h-1zM4 0h1v1h-1zM5 0h1v1h-1zM6 0h1v1h-1zM8 0h1v1h-1zM12 0h1v1h-1zM13 0h1v1h-1zM18 0h1v1h-1zM19 0h1v1h-1zM20 0h1v1h-1zM21 0h1v1h-1zM22 0h1v1h-1zM23 0h1v1h-1zM24 0h1v1h-1zM0 1h1v1h-1zM6 1h1v1h-1zM8 1h1v1h-1zM13 1h1v1h-1zM14 1h1v1h-1zM16 1h1v1h-1zM18 1h1v1h-1zM24 1h1v1h-1zM0 2h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM6 2h1v1h-1zM8 2h1v1h-1zM10 2h1v1h-1zM13 2h1v1h-1zM15 2h1v1h-1zM16 2h1v1h-1zM18 2h1v1h-1zM20 2h1v1h-1zM21 2h1v1h-1zM22 2h1v1h-1zM24 2h1v1h-1zM0 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM9 3h1v1h-1zM10 3h1v1h-1zM12 3h1v1h-1zM13 3h1v1h-1zM16 3h1v1h-1zM18 3h1v1h-1zM20 3h1v1h-1zM21 3h1v1h-1zM22 3h1v1h-1zM24 3h1v1h-1zM0 4h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM8 4h1v1h-1zM9 4h1v1h-1zM11 4h1v1h-1zM16 4h1v1h-1zM18 4h1v1h-1zM20 4h1v1h-1zM21 4h1v1h-1zM22 4h1v1h-1zM24 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM11 5h1v1h-1zM12 5h1v1h-1zM16 5h1v1h-1zM18 5h1v1h-1zM24 5h1v1h-1zM0 6h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM19 6h1v1h-1zM20 6h1v1h-1zM21 6h1v1h-1zM22 6h1v1h-1zM23 6h1v1h-1zM24 6h1v1h-1zM9 7h1v1h-1zM13 7h1v1h-1zM14 7h1v1h-1zM15 7h1v1h-1zM16 7h1v1h-1zM0 8h1v1h-1zM3 8h1v1h-1zM4 8h1v1h-1zM5 8h1v1h-1zM6 8h1v1h-1zM7 8h1v1h-1zM8 8h1v1h-1zM16 8h1v1h-1zM17 8h1v1h-1zM20 8h1v1h-1zM22 8h1v1h-1zM23 8h1v1h-1zM24 8h1v1h-1zM0 9h1v1h-1zM2 9h1v1h-1zM3 9h1v1h-1zM5 9h1v1h-1zM10 9h1v1h-1zM13 9h1v1h-1zM14 9h1v1h-1zM15 9h1v1h-1zM16 9h1v1h-1zM17 9h1v1h-1zM19 9h1v1h-1zM20 9h1v1h-1zM21 9h1v1h-1zM22 9h1v1h-1zM23 9h1v1h-1zM0 10h1v1h-1zM1 10h1v1h-1zM4 10h1v1h-1zM6 10h1v1h-1zM7 10h1v1h-1zM10 10h1v1h-1zM13 10h1v1h-1zM15 10h1v1h-1zM16 10h1v1h-1zM18 10h1v1h-1zM19 10h1v1h-1zM21 10h1v1h-1zM24 10h1v1h-1zM0 11h1v1h-1zM1 11h1v1h-1zM2 11h1v1h-1zM3 11h1v1h-1zM4 11h1v1h-1zM8 11h1v1h-1zM9 11h1v1h-1zM14 11h1v1h-1zM15 11h1v1h-1zM16 11h1v1h-1zM17 11h1v1h-1zM18 11h1v1h-1zM21 11h1v1h-1zM22 11h1v1h-1zM23 11h1v1h-1zM24 11h1v1h-1zM0 12h1v1h-1zM3 12h1v1h-1zM5 12h1v1h-1zM6 12h1v1h-1zM8 12h1v1h-1zM11 12h1v1h-1zM12 12h1v1h-1zM15 12h1v1h-1zM18 12h1v1h-1zM24 12h1v1h-1zM0 13h1v1h-1zM1 13h1v1h-1zM7 13h1v1h-1zM8 13h1v1h-1zM9 13h1v1h-1zM10 13h1v1h-1zM13 13h1v1h-1zM14 13h1v1h-1zM15 13h1v1h-1zM16 13h1v1h-1zM20 13h1v1h-1zM23 13h1v1h-1zM0 14h1v1h-1zM1 14h1v1h-1zM2 14h1v1h-1zM5 14h1v1h-1zM6 14h1v1h-1zM8 14h1v1h-1zM9 14h1v1h-1zM10 14h1v1h-1zM11 14h1v1h-1zM12 14h1v1h-1zM15 14h1v1h-1zM18 14h1v1h-1zM20 14h1v1h-1zM21 14h1v1h-1zM22 14h1v1h-1zM23 14h1v1h-1zM24 14h1v1h-1zM0 15h1v1h-1zM3 15h1v1h-1zM4 15h1v1h-1zM5 15h1v1h-1zM7 15h1v1h-1zM11 15h1v1h-1zM14 15h1v1h-1zM17 15h1v1h-1zM18 15h1v1h-1zM19 15h1v1h-1zM21 15h1v1h-1zM22 15h1v1h-1zM24 15h1v1h-1zM0 16h1v1h-1zM3 16h1v1h-1zM5 16h1v1h-1zM6 16h1v1h-1zM7 16h1v1h-1zM9 16h1v1h-1zM10 16h1v1h-1zM12 16h1v1h-1zM13 16h1v1h-1zM15 16h1v1h-1zM16 16h1v1h-1zM17 16h1v1h-1zM18 16h1v1h-1zM19 16h1v1h-1zM20 16h1v1h-1zM22 16h1v1h-1zM23 16h1v1h-1zM8 17h1v1h-1zM11 17h1v1h-1zM12 17h1v1h-1zM16 17h1v1h-1zM20 17h1v1h-1zM22 17h1v1h-1zM23 17h1v1h-1zM0 18h1v1h-1zM1 18h1v1h-1zM2 18h1v1h-1zM3 18h1v1h-1zM4 18h1v1h-1zM5 18h1v1h-1zM6 18h1v1h-1zM8 18h1v1h-1zM9 18h1v1h-1zM11 18h1v1h-1zM13 18h1v1h-1zM16 18h1v1h-1zM18 18h1v1h-1zM20 18h1v1h-1zM24 18h1v1h-1zM0 19h1v1h-1zM6 19h1v1h-1zM8 19h1v1h-1zM9 19h1v1h-1zM10 19h1v1h-1zM11 19h1v1h-1zM13 19h1v1h-1zM15 19h1v1h-1zM16 19h1v1h-1zM20 19h1v1h-1zM23 19h1v1h-1zM24 19h1v1h-1zM0 20h1v1h-1zM2 20h1v1h-1zM3 20h1v1h-1zM4 20h1v1h-1zM6 20h1v1h-1zM8 20h1v1h-1zM11 20h1v1h-1zM12 20h1v1h-1zM14 20h1v1h-1zM15 20h1v1h-1zM16 20h1v1h-1zM17 20h1v1h-1zM18 20h1v1h-1zM19 20h1v1h-1zM20 20h1v1h-1zM0 21h1v1h-1zM2 21h1v1h-1zM3 21h1v1h-1zM4 21h1v1h-1zM6 21h1v1h-1zM8 21h1v1h-1zM9 21h1v1h-1zM11 21h1v1h-1zM12 21h1v1h-1zM15 21h1v1h-1zM16 21h1v1h-1zM17 21h1v1h-1zM18 21h1v1h-1zM23 21h1v1h-1zM24 21h1v1h-1zM0 22h1v1h-1zM2 22h1v1h-1zM3 22h1v1h-1zM4 22h1v1h-1zM6 22h1v1h-1zM11 22h1v1h-1zM15 22h1v1h-1zM16 22h1v1h-1zM20 22h1v1h-1zM21 22h1v1h-1zM22 22h1v1h-1zM23 22h1v1h-1zM24 22h1v1h-1zM0 23h1v1h-1zM6 23h1v1h-1zM10 23h1v1h-1zM11 23h1v1h-1zM12 23h1v1h-1zM17 23h1v1h-1zM18 23h1v1h-1zM19 23h1v1h-1zM20 23h1v1h-1zM22 23h1v1h-1zM23 23h1v1h-1zM24 23h1v1h-1zM0 24h1v1h-1zM1 24h1v1h-1zM2 24h1v1h-1zM3 24h1v1h-1zM4 24h1v1h-1zM5 24h1v1h-1zM6 24h1v1h-1zM8 24h1v1h-1zM9 24h1v1h-1zM11 24h1v1h-1zM12 24h1v1h-1zM16 24h1v1h-1zM17 24h1v1h-1zM21 24h1v1h-1zM24 24h1v1h-1z"/></svg></div>
+      <p><strong>Scan with your iPhone camera</strong>The beta installs through Apple’s TestFlight app, so it starts on your phone. Or open staries.app/beta there.</p>
+    </div>
+  </section>
+
+  <!-- Android: no build yet, so the waitlist is the whole page. -->
+  <section id="android" hidden>
+    <p class="eyebrow">iPhone only, for now</p>
+    <h1>Staries isn’t on Android yet</h1>
+    <p class="lede">Leave your email and I’ll tell you if an Android version happens. How many people ask is what decides it.</p>
+    <div class="card" style="margin-top:0">
+      <form action="https://buttondown.com/api/emails/embed-subscribe/stariesapp" method="post">
+        <input type="hidden" name="tag" value="android">
+        <input type="hidden" name="metadata__source" class="source" value="">
+        <label for="android-email" hidden>Email</label>
+        <input type="email" id="android-email" name="email" placeholder="you@example.com" required autocomplete="email">
+        <button type="submit">Tell me</button>
+      </form>
+      <p class="thanks" role="status" aria-live="polite" hidden><b>Thanks.</b> Check your inbox and tap Confirm, and you’re on the list.</p>
+    </div>
+  </section>
+
+  <!-- The one email ask, tied to the reason to give it. -->
+  <div class="card" id="offer">
+    <h2>Want the full version <b>free</b> at launch?</h2>
+    <p>Leave your email. After a week or so I’ll send you a two-minute survey, and when you’ve done it the full version is yours free when Staries launches.</p>
+    <form action="https://buttondown.com/api/emails/embed-subscribe/stariesapp" method="post">
+      <input type="hidden" name="tag" value="beta">
+      <input type="hidden" name="tag" value="public-beta">
+      <input type="hidden" name="metadata__source" class="source" value="">
+      <label for="email" hidden>Email</label>
+      <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email">
+      <button type="submit">Count me in</button>
+    </form>
+    <p class="thanks" role="status" aria-live="polite" hidden><b>Nearly done.</b> Check your inbox and tap Confirm so the survey reaches you.</p>
+    <p class="fine">Just the survey and a note at launch. No spam, unsubscribe any time.</p>
   </div>
 
-  <ol class="steps">
-    <li>
-      <span>1</span>
-      <div>
-        <p><strong>Get Apple’s TestFlight app.</strong> It’s how Apple delivers beta apps. Skip this if you already have it.</p>
-        <p><a class="btn quiet" href="https://apps.apple.com/app/testflight/id899247664">TestFlight on the App Store</a></p>
-      </div>
-    </li>
-    <li>
-      <span>2</span>
-      <div>
-        <p><strong>Join the Staries beta.</strong> TestFlight opens and installs it.</p>
-        <p><a class="btn primary" id="join" href="https://testflight.apple.com/join/SFzxg8WA">Join the beta</a></p>
-      </div>
-    </li>
-  </ol>
-  <p class="need offer-line">Free while in beta. Use it for a week or so, then fill in the <a href="survey/">two-minute survey</a> and the full version is yours free when Staries launches.</p>
-  <p class="need">iPhone with iOS 26 or later. No account, and your stories stay on your phone and in your own iCloud.</p>
+  <p class="meta" id="meta">iPhone with iOS 26 or later · Free while in beta<br>No account. Your stories stay on your phone and in your iCloud.<br><button type="button" class="android-link" id="android-link">On Android?</button></p>
 
-  <details class="android">
-    <summary>On Android?</summary>
-    <p>Staries is iPhone only for now. Leave your email and I’ll tell you if an Android version happens. Enough people asking is what decides it.</p>
-    <form action="https://buttondown.com/api/emails/embed-subscribe/stariesapp" method="post">
-      <input type="hidden" name="tag" value="android">
-      <input type="hidden" name="metadata__source" class="source" value="">
-      <label for="android-email" hidden>Email</label>
-      <input type="email" id="android-email" name="email" placeholder="you@example.com" required autocomplete="email">
-      <button type="submit">Tell me</button>
-    </form>
-    <p class="thanks" role="status" aria-live="polite" hidden>Nearly there. Check your inbox and tap the link to confirm.</p>
-  </details>
-
-  <h2>Then try this</h2>
-  <p>Add two or three real stories from your work, then rehearse one out loud. That’s where Staries earns its place, and it’s what I most want to hear about.</p>
-  <p>Once you’ve used it for a bit, the <a href="survey/">survey</a> is the best way to tell me how it went (and claims your free unlock). For anything else, take a screenshot in the app and tap Share Beta Feedback, or email <a href="mailto:hello@staries.app">hello@staries.app</a>. Blunt is good.</p>
-
-  <h2>Stay in the loop</h2>
-  <p>Leave your email and I’ll send the occasional note when something big changes, and one when Staries launches. Optional.</p>
-  <form action="https://buttondown.com/api/emails/embed-subscribe/stariesapp" method="post">
-    <input type="hidden" name="tag" value="beta">
-    <input type="hidden" name="tag" value="public-beta">
-    <input type="hidden" name="metadata__source" class="source" value="">
-    <label for="email" hidden>Email</label>
-    <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email">
-    <button type="submit">Keep me posted</button>
-  </form>
-  <p class="thanks" role="status" aria-live="polite" hidden>Nearly there. Check your inbox and tap the link to confirm.</p>
-
-  <footer><a href="../">staries.app</a> · <a href="../privacy/">Privacy</a></footer>
+  <footer>Feedback? Share Beta Feedback in TestFlight, or <a href="mailto:stariesapp@gmail.com">stariesapp@gmail.com</a> · <a href="../privacy/">Privacy</a></footer>
 </main>
 <script>
   (function () {
@@ -173,14 +223,24 @@
     };
     var from = '';
     try { from = (new URLSearchParams(location.search).get('from') || '').toLowerCase().replace(/[^a-z0-9-]/g, '').slice(0, 40); } catch (e) {}
-    var join = document.getElementById('join');
-    join.href = LINKS[from] || LINKS.default;
+    document.getElementById('join').href = LINKS[from] || LINKS.default;
     [].forEach.call(document.querySelectorAll('.source'), function (el) { el.value = from || 'direct'; });
 
+    function show(which) {
+      ['ios', 'desktop', 'android'].forEach(function (id) { document.getElementById(id).hidden = id !== which; });
+      var android = which === 'android';
+      document.getElementById('offer').hidden = android;
+      document.getElementById('meta').hidden = android;
+    }
     var ua = navigator.userAgent || '';
-    var mobile = /iPhone|iPod|Android/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
-    if (!mobile) document.getElementById('desktop').hidden = false;
-    if (/Android/.test(ua)) document.querySelector('.android').open = true;
+    var iPadOS = /Macintosh/.test(ua) && navigator.maxTouchPoints > 1;
+    if (/Android/.test(ua)) show('android');
+    else if (!/iPhone|iPod|iPad/.test(ua) && !iPadOS) show('desktop');
+    document.getElementById('android-link').addEventListener('click', function () {
+      show('android');
+      window.scrollTo(0, 0);
+      document.getElementById('android-email').focus();
+    });
   })();
   (function () {
     // Sign up without leaving the page. If the request can't be sent, fall back to a normal form post.
