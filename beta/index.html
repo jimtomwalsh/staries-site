@@ -90,6 +90,10 @@
   }
   form button:hover { background: var(--star); }
   .thanks { color: var(--ink); }
+  .android { margin: 18px 0 0; padding: 14px 16px; border: 1px solid var(--glass-edge); border-radius: 18px; }
+  .android summary { cursor: pointer; font-size: 16px; font-weight: 600; color: var(--ink); }
+  .android p:first-of-type { margin-top: 12px; }
+  .android form { margin-bottom: 4px; }
   [hidden] { display: none !important; }
   :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
   footer { margin-top: 56px; font-size: 13px; color: var(--ink-faint); }
@@ -126,6 +130,19 @@
   </ol>
   <p class="need">iPhone with iOS 26 or later. No account, and your stories stay on your phone and in your own iCloud.</p>
 
+  <details class="android">
+    <summary>On Android?</summary>
+    <p>Staries is iPhone only for now. Leave your email and I’ll tell you if an Android version happens. Enough people asking is what decides it.</p>
+    <form action="https://buttondown.com/api/emails/embed-subscribe/stariesapp" method="post">
+      <input type="hidden" name="tag" value="android">
+      <input type="hidden" name="metadata__source" class="source" value="">
+      <label for="android-email" hidden>Email</label>
+      <input type="email" id="android-email" name="email" placeholder="you@example.com" required autocomplete="email">
+      <button type="submit">Tell me</button>
+    </form>
+    <p class="thanks" role="status" aria-live="polite" hidden>Nearly there. Check your inbox and tap the link to confirm.</p>
+  </details>
+
   <h2>Then try this</h2>
   <p>Add two or three real stories from your work, then rehearse one out loud. That’s where Staries earns its place, and it’s what I most want to hear about.</p>
   <p>To send feedback, take a screenshot in the app and tap Share Beta Feedback, or email <a href="mailto:hello@staries.app">hello@staries.app</a>. Blunt is good.</p>
@@ -135,7 +152,7 @@
   <form action="https://buttondown.com/api/emails/embed-subscribe/stariesapp" method="post">
     <input type="hidden" name="tag" value="beta">
     <input type="hidden" name="tag" value="public-beta">
-    <input type="hidden" name="metadata__source" id="source" value="">
+    <input type="hidden" name="metadata__source" class="source" value="">
     <label for="email" hidden>Email</label>
     <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email">
     <button type="submit">Keep me posted</button>
@@ -155,24 +172,26 @@
     try { from = (new URLSearchParams(location.search).get('from') || '').toLowerCase().replace(/[^a-z0-9-]/g, '').slice(0, 40); } catch (e) {}
     var join = document.getElementById('join');
     join.href = LINKS[from] || LINKS.default;
-    document.getElementById('source').value = from || 'direct';
+    [].forEach.call(document.querySelectorAll('.source'), function (el) { el.value = from || 'direct'; });
 
     var ua = navigator.userAgent || '';
     var mobile = /iPhone|iPod|Android/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
     if (!mobile) document.getElementById('desktop').hidden = false;
+    if (/Android/.test(ua)) document.querySelector('.android').open = true;
   })();
   (function () {
     // Sign up without leaving the page. If the request can't be sent, fall back to a normal form post.
-    var form = document.querySelector('form');
-    var thanks = document.querySelector('.thanks');
-    if (!form || !window.fetch || !window.FormData) return;
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var button = form.querySelector('button');
-      button.disabled = true;
-      fetch(form.action, { method: 'POST', mode: 'no-cors', body: new FormData(form) })
-        .then(function () { form.hidden = true; thanks.hidden = false; })
-        .catch(function () { button.disabled = false; form.submit(); });
+    if (!window.fetch || !window.FormData) return;
+    [].forEach.call(document.querySelectorAll('form'), function (form) {
+      var thanks = form.nextElementSibling;
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var button = form.querySelector('button');
+        button.disabled = true;
+        fetch(form.action, { method: 'POST', mode: 'no-cors', body: new FormData(form) })
+          .then(function () { form.hidden = true; thanks.hidden = false; })
+          .catch(function () { button.disabled = false; form.submit(); });
+      });
     });
   })();
 </script>
